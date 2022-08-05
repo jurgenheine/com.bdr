@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<body>
+    <fieldset>
+        <div class="field row">
+            <label for="username"><span data-i18n="pair.username"></label>
+            <input id="username" type="text" value="" />
+        </div>
+        <div class="field row">
+            <label for="password"><span data-i18n="pair.password"></label>
+            <input id="password" type="password" value="" />
+        </div>
+        <div class="field row">
+            <label for="pairingcode"><span data-i18n="pair.pairingcode"></span></label>
+            <input id="pairingcode" type="text" value="" />
+        </div>
+        <div class="field row">
+            <button id="pairButton" class="left"><span data-i18n="pair.pairbutton"></button>
+        </div>
+    </fieldset>
+    <script type="text/javascript">
+            var usernameElement = document.getElementById('username');
+            var passwordElement = document.getElementById('password');
+            var pairingcodeElement = document.getElementById('pairingcode');
+            var pairElement = document.getElementById('pairButton');
+
+            pairElement.addEventListener('click', function (e) {
+                let username = usernameElement.value;
+                let password = passwordElement.value;
+                let pairingcode = pairingcodeElement.value;
+
+                if (!username || username.length === 0) {
+                    return Homey.alert(Homey.__("pair.username") +" "+ Homey.__("pair.isrequired") );
+                }
+                if (!password || password.length === 0) {
+                    return Homey.alert(Homey.__("pair.password") +" "+ Homey.__("pair.isrequired") );
+                }
+                if (!pairingcode || pairingcode.length === 0) {
+                    return Homey.alert(Homey.__("pair.pairingcode") +" "+ Homey.__("pair.isrequired") );
+                }
+                 var pairdata ={
+                    username : username,
+                    password  : password,
+                    pairingcode : pairingcode
+                 }
+                Homey.emit("start_pair", pairdata)
+                .then(function (device) {
+                    Homey.createDevice(device)
+                    .then(function (result) {
+                            Homey.done();
+                        })
+                    .catch(function (error) {
+                            Homey.alert(err);
+                        });
+                    })
+                .catch(function (error) {
+                        Homey.alert(err);
+                    });
+            });
+        
+    </script>
+</body>
+</html>

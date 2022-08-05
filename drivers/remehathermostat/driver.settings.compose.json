@@ -1,0 +1,100 @@
+[
+    {
+        "type": "group",
+        "label": {
+            "en": "Login details",
+            "nl": "Login gegevens"
+        },
+        "children": [
+            {
+                "id": "username",
+                "type": "text",
+                "label": {
+                    "en": "Username",
+                    "nl": "Gebruiersnaam"
+                },
+                "hint": {
+                    "en": "The name of the user.",
+                    "nl": "De naam van de gebruiker."
+                }
+            },
+            {
+                "id": "password",
+                "type": "password",
+                "label": {
+                    "en": "Password",
+                    "nl": "Wachtwoord"
+                },
+                "hint": {
+                    "en": "The password of the user.",
+                    "nl": "Het wachtwoord van de gebruiker."
+                }
+            }
+        ]
+    },
+    {
+        "type": "group",
+        "label": {
+            "en": "Intervals",
+            "nl": "Tijdsintervallen"
+        },
+        "children": [
+            {
+                "id": "interval_temperature",
+                "type": "number",
+                "label": {
+                    "en": "Temperature",
+                    "nl": "Temperatuur"
+                },
+                "value": 5,
+                "min": 1,
+                "units": { 
+                    "en": "minutes",
+                    "nl": "minuten" 
+                }
+            },
+            {
+                "id": "interval_pressure",
+                "type": "number",
+                "label": {
+                    "en": "Waterpressure",
+                    "nl": "Waterdruk"
+                },
+                "value": 24,
+                "min": 6,
+                "units": { 
+                    "en": "hours",
+                    "nl": "uren" 
+                }
+            },
+            {
+                "id": "interval_flowtemp",
+                "type": "number",
+                "label": {
+                    "en": "Watertemperature",
+                    "nl": "Watertemperatuur"
+                },
+                "value": 10,
+                "min": 2,
+                "units": { 
+                    "en": "minutes",
+                    "nl": "minuten" 
+                }
+            },
+            {
+                "id": "interval_power",
+                "type": "number",
+                "label": {
+                    "en": "Powerconsumption",
+                    "nl": "Verbruik"
+                },
+                "value": 5,
+                "min": 1,
+                "units": { 
+                    "en": "minutes",
+                    "nl": "minuten" 
+                }
+            }
+        ]
+    }
+]

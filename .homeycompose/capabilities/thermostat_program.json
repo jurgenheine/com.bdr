@@ -1,0 +1,59 @@
+{
+    "type": "enum",
+    "title": {
+      "en": "Thermostat program mode",
+      "nl": "Thermostaat programma modus"
+
+    },
+    "desc": {
+      "en": "Thermostat program",
+      "nl": "Thermostaat programma"
+
+    },
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "values": [
+      {
+        "id": "manual",
+        "title": {
+          "en": "Manual",
+          "nl": "Handmatig"
+        }
+      },
+      {
+        "id": "anti-frost",
+        "title": {
+          "en": "Anti frost",
+          "nl": "Vorstbeveiliging"
+        }
+      },
+      {
+        "id": "holiday",
+        "title": {
+          "en": "Holiday modus",
+          "nl": "Vakantiemodus"
+        }
+      },
+      {
+      "id": "schedule-1",
+      "title": {
+        "en": "Schedule 1",
+        "nl": "Progrmma 1"
+      }
+    }, {
+      "id": "schedule-2",
+      "title": {
+        "en": "Schedule 2",
+        "nl": "Progrmma 2"
+      }
+    },{
+      "id": "schedule-3",
+      "title": {
+        "en": "Schedule 3",
+        "nl": "Progrmma 3"
+      }
+     }
+    ]
+  }
+  

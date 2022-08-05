@@ -1,0 +1,15 @@
+{
+	"images": {
+		"large": "{{driverAssetsPath}}/images/large.png",
+		"small": "{{driverAssetsPath}}/images/small.png"
+	},
+	"icon": "{{driverAssetsPath}}/icon.svg",
+	"platforms": ["local"],
+  "connectivity": ["cloud"],
+	"pair": [
+		{
+			"id": "pair",
+			"template": "pair"
+		}
+	]
+}

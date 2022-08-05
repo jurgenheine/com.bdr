@@ -1,0 +1,17 @@
+{
+    "name": { 
+            "en": "Remeha thermostat" ,
+            "nl": "Remeha thermostaat"},
+    "class": "thermostat",
+    "capabilities": ["target_temperature","measure_temperature","measure_pressure","meter_power","thermostat_mode","thermostat_program"],
+    "images": {
+      "small": "/drivers/remehathermostat/assets/images/small.png",
+      "large": "/drivers/remehathermostat/assets/images/large.png",
+      "xlarge": "/drivers/remehathermostat/assets/images/xlarge.png"
+    },
+    "pair": [
+      {
+        "id": "my_view"
+      }
+    ]
+  }
