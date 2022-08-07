@@ -1,24 +1,31 @@
+const axios = require('axios').default;
 const Homey = require('homey');
 
 class BdrDriver extends Homey.Driver {
-    base_url = "https://ruapi.remoteapp.bdrthermea.com/v1.0"
-    base_header = {
-        "Accept": "application/json, text/plain, */*",
-        "Connection": "keep-alive",
-        "X-Requested-With": "com.bdrthermea.roomunitapplication.baxi",
-        "Content-Type": "application/json;charset=UTF-8",
-        "Sec-Fetch-Site": "cross-site",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Dest": "empty",
-        "Accept-Encoding": "gzip, deflate",
-        "Authorization": "Basic cnVhcHA6V25AW1tjJF1QfjghM2AoW35BZiUnSDI/bEh3XWNpaXE6cn1MT3pqTGsueTVNSCtfcT0=",
-    }
-    endpoints = {
-        pair: base_url + "/pairings",
-        connection: base_url + "/system/gateway/connection",
-        capabilities: base_url + "/capabilities",
+    init() {
+        this.base_url = "https://ruapi.remoteapp.bdrthermea.com/v1.0";
+        this.base_header = {
+            "Accept": "application/json, text/plain, */*",
+            "Connection": "keep-alive",
+            "X-Requested-With": "com.bdrthermea.roomunitapplication.baxi",
+            "Content-Type": "application/json;charset=UTF-8",
+            "Sec-Fetch-Site": "cross-site",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Dest": "empty",
+            "Accept-Encoding": "gzip, deflate",
+            "Authorization": "Basic cnVhcHA6V25AW1tjJF1QfjghM2AoW35BZiUnSDI/bEh3XWNpaXE6cn1MT3pqTGsueTVNSCtfcT0="
+        };
+        this.endpoints = {
+            pair: this.base_url + "/pairings",
+            connection: this.base_url + "/system/gateway/connection",
+            capabilities: this.base_url + "/capabilities"
+        };
     }
 
+    copyObject(value){
+        return JSON.parse(JSON.stringify(value));
+    }
+    
     async login(username, password, brand) {
         var api_endpoint = `https://remoteapp.bdrthermea.com/user/${brand}/login`;
 
@@ -27,14 +34,14 @@ class BdrDriver extends Homey.Driver {
             "password": password
         }
 
-        var response = await async_post_request(api_endpoint, payload);
+        var response = await this.async_post_request(api_endpoint, payload);
         if (response == null) {
             throw 'ERROR logging to BDR. Perhaps wrong password??';
         }
     }
 
     async pair(username, password, pairingcode, brand) {
-        var id = this.homey.cloud.getHomeyId();
+        var id = await this.homey.cloud.getHomeyId();
         var device = `Homey_${id}`;
         var api_endpoint = this.endpoints.pair;
         var payload = {
@@ -48,58 +55,55 @@ class BdrDriver extends Homey.Driver {
         var response = await this.async_post_request(api_endpoint, payload);
 
         if (response == null) {
-            throw 'Error pairing integration with BDR';
+            throw new Error('Error pairing integration with BDR');
         }
-        var token = response.json().token;
-        return token;
+
+        return response.token;
     }
 
-    async sync_request(method, url, headers, payload) {
+    async sync_request(method, url, headers, data) {
         if (url == null)
             return null;
 
-        this.log(`BDR API request: method = ${method}, url = ${url}, headers = ${JSON.stringify(headers)}, payload = ${JSON.stringify(payload)}`);
+        this.homey.log(`BDR API request: method = ${method}, url = ${url}, headers = ${JSON.stringify(headers)}, data = ${JSON.stringify(data)}`);
+
         try {
-            var response = null;
-            if (method == "get") {
-                response = await got.get(url, { headers: headers }).json();
-            }
-            else if (method == "put") {
-                response = await got.put(url, { json: payload, headers: headers }).json();
-            }
-            else if (method == "post") {
-                response = await got.post(url, { json: payload, headers: headers }).json();
-            }
+            let response = await axios({
+                url: url,
+                method: method,
+                headers: headers,
+                data: data
+            });
+
             if (response == null)
                 return null;
-
-            this.log(`BDR API response: ${response}`);
-
-            if (response.statusCode != 200) {
-                this.error(`ERROR with ${method} request to ${url}: ${response.statusCode}`);
+            
+            if (response.status >= 200 && response.status < 300) {
+                this.homey.log(`ERROR with ${method} request to ${url}: ${response.statusText}`);
                 return null;
             }
-            return response;
+            this.homey.log(`BDR API response: ${JSON.stringify(response.data)}`);
+            return response.data;
         }
         catch (e) {
-            this.error(`EXCEPTION with ${method} request to ${url}: ${e}`);
+            this.homey.error(`EXCEPTION with ${method} request to ${url}: ${e}`);
             throw e;
         }
     }
 
-    async async_post_request(endpoint, payload, headers = this.base_header) {
-        return await this.sync_request("post", endpoint, headers, payload);
+    async async_post_request(endpoint, payload) {
+        return await this.sync_request("post", endpoint, this.base_header, payload);
     }
 
-    async async_put_request(endpoint, token, payload, headers = this.base_header) {
-        var headers = headers.copy();
+    async async_put_request(endpoint, token, payload) {
+        var headers = copyObject(this.base_header);
         headers["X-Bdr-Pairing-Token"] = token;
 
         return await this.sync_request("put", endpoint, headers, payload);
     }
 
-    async async_get_request(endpoint, token, headers = this.base_header) {
-        var headers = headers.copy();
+    async async_get_request(endpoint, token) {
+        var headers = copyObject(this.base_header);
         headers["X-Bdr-Pairing-Token"] = token;
 
         return await this.sync_request("get", endpoint, headers);
@@ -115,7 +119,7 @@ class BdrDriver extends Homey.Driver {
 
     async load_capabilities(token) {
         var capabilities = {}
-        var api_endpoint = this.driver.endpoints.capabilities;
+        var api_endpoint = this.endpoints.capabilities;
 
         var capabilitiesToParse = await this.async_get_request(api_endpoint, token);
 

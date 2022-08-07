@@ -28,15 +28,18 @@
                 let username = usernameElement.value;
                 let password = passwordElement.value;
                 let pairingcode = pairingcodeElement.value;
-
+                
                 if (!username || username.length === 0) {
-                    return Homey.alert(Homey.__("pair.username") +" "+ Homey.__("pair.isrequired") );
+                    Homey.alert(Homey.__("pair.username") +" "+ Homey.__("pair.isrequired") );
+                    return;
                 }
                 if (!password || password.length === 0) {
-                    return Homey.alert(Homey.__("pair.password") +" "+ Homey.__("pair.isrequired") );
+                    Homey.alert(Homey.__("pair.password") +" "+ Homey.__("pair.isrequired") );
+                    return;
                 }
                 if (!pairingcode || pairingcode.length === 0) {
-                    return Homey.alert(Homey.__("pair.pairingcode") +" "+ Homey.__("pair.isrequired") );
+                    Homey.alert(Homey.__("pair.pairingcode") +" "+ Homey.__("pair.isrequired") );
+                    return;
                 }
                  var pairdata ={
                     username : username,
@@ -51,13 +54,14 @@
                         })
                     .catch(function (error) {
                             Homey.alert(err);
+                            Homey.done();
                         });
                     })
                 .catch(function (error) {
                         Homey.alert(err);
+                        Homey.done();
                     });
             });
-        
     </script>
 </body>
 </html>

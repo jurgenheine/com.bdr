@@ -3,18 +3,27 @@
 const BdrDriver = require('../bdrdriver');
 
 class RemahaDriver extends BdrDriver {
-    async onPair(session) {
-        await session.showView("login");
+    async onInit() {
+        this.init();
+    }
 
-        session.setHandler("start_pair", async function (data) {
+    async onPair(session) {
+        this.homey.log('start pair session');
+        session.setHandler("start_pair", async (data) => {
+            this.homey.log(`start pairing for ${data.username} and code ${data.pairingcode}`);
             let capabilities = [];
             let capabilitiesOptions = {};
             let settings = {
                 username: data.username,
-                password: data.password
+                password: data.password,
+                pairingcode: data.pairingcode
             };
+
             await this.login(data.username, data.password, 'remeha');
             const token = await this.pair(data.username, data.password, data.pairingcode, 'remeha');
+            let store = {
+                token: token
+            };
             const bdr_capabilities = await this.load_capabilities(token);
             let status = await this.async_get_request(bdr_capabilities.centralHeatingZones?.statusUri, token);
 
@@ -40,8 +49,9 @@ class RemahaDriver extends BdrDriver {
                 capabilitiesOptions["measure_temperature.flow"] = { 'title': { 'en': "Water temperature", 'nl': "Water temperatuur" } };
             }
 
-            return { name: "Remeha_" + pairingcode, settings: settings, capabilities: capabilities, capabilitiesOptions: capabilitiesOptions, data: { id: token } };
+            return { name: "Remeha_" + pairingcode, store: store, settings: settings, capabilities: capabilities, capabilitiesOptions: capabilitiesOptions, data: { id: token } };
         });
+        await session.showView("login");
     }
 }
 
