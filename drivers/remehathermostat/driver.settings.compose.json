@@ -29,6 +29,18 @@
                     "en": "The password of the user.",
                     "nl": "Het wachtwoord van de gebruiker."
                 }
+            },
+            {
+                "id": "pairingcode",
+                "type": "text",
+                "label": {
+                    "en": "Pairingcode",
+                    "nl": "Koppelcode"
+                },
+                "hint": {
+                    "en": "The otp token of device.",
+                    "nl": "Koppelcode van aparaat."
+                }
             }
         ]
     },

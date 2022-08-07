@@ -1,7 +1,7 @@
 {
     "name": { 
-            "en": "Remeha thermostat" ,
-            "nl": "Remeha thermostaat"},
+            "en": "Remeha e-twist thermostat" ,
+            "nl": "Remeha e-twist thermostaat"},
     "class": "thermostat",
     "capabilities": ["target_temperature","measure_temperature","measure_pressure","meter_power","thermostat_mode","thermostat_program"],
     "images": {
