@@ -8,15 +8,28 @@ class RemehaDevice extends BdrDevice {
 
     async onInit() {
         await this.initDevice(this.getData().id);
-        this.registerMultipleCapabilityListener(capabilities, async (values, options) => { return this._onMultipleCapabilityListener(values, options); }, CAPABILITIES_SET_DEBOUNCE);
+        await this.fixCapabilities();
+        this.registerMultipleCapabilityListener(this.getCapabilities(), async (values, options) => { return await this._onMultipleCapabilityListener(values, options); }, CAPABILITIES_SET_DEBOUNCE);
         this.homey.log(`Remeha thermostat ${this.getName()} has been initialized`);
         await this.async_update_all();
     }
 
-    _onMultipleCapabilityListener(valueObj, optsObj) {
+    async fixCapabilities() {
+        if (this.hasCapability("measure_pressure")) {
+            this.homey.log("change capabality measure_pressure to thermostat_waterpressure");
+            await this.removeCapability("measure_pressure");
+            await this.addCapability("thermostat_waterpressure");
+        }
+        if (this.hasCapability("meter_power")) {
+            this.homey.log("Remove capablity meter_power");
+            await this.removeCapability("meter_power");
+        }
+    }
+
+    async _onMultipleCapabilityListener(valueObj, optsObj) {
         this.log("Remeha thermostat capabilities changed by Homey: " + JSON.stringify(valueObj));
         try {
-            "target_temperature","measure_temperature","measure_pressure","meter_power","thermostat_mode","thermostat_program"
+            "target_temperature", "measure_temperature", "measure_pressure", "meter_power", "thermostat_mode", "thermostat_program"
             if (valueObj.target_temperature != null) {
                 await this.async_set_temperature(valueObj.target_temperature);
             }
@@ -33,29 +46,31 @@ class RemehaDevice extends BdrDevice {
 
     async async_update_all() {
         await this.update_temperatures_loop();
-        await this.update_water_pressure_loop();
         await this.update_water_temperature_loop();
-        //todo, map errors and power consumption
+        await this.update_water_pressure_loop();
+
+        //below for status
         await this.get_consumptions();
         await this.get_errors();
+        await this.get_device_information();
     }
 
     async update_temperatures_loop() {
         await this.async_update_temperatures();
-        let settings = this.getSettings();
-        this.homey.setTimeout(this.update_temperatures_loop, settings.interval_temperature * 60 * 1000);
-    }
-
-    async update_water_pressure_loop() {
-        await this.async_update_water_pressure();
-        let settings = this.getSettings();
-        this.homey.setTimeout(this.update_water_pressure_loop, settings.interval_pressure * 60 * 60 * 1000);
+        let interval_temperature = this.getSetting("interval_temperature");
+        this.homey.setTimeout(async () => await this.update_temperatures_loop(), interval_temperature * 60 * 1000);
     }
 
     async update_water_temperature_loop() {
         await this.async_update_water_temperature();
-        let settings = this.getSettings();
-        this.homey.setTimeout(this.update_water_temperature_loop, settings.interval_flowtemp * 60 * 1000);
+        let interval_flowtemp = this.getSetting("interval_flowtemp");
+        this.homey.setTimeout(async () => await this.update_water_temperature_loop(), interval_flowtemp * 60 * 1000);
+    }
+
+    async update_water_pressure_loop() {
+        await this.async_update_water_pressure();
+        let interval_pressure = this.getSetting("interval_pressure");
+        this.homey.setTimeout(async () => await this.update_water_pressure_loop(), interval_pressure * 60 * 60 * 1000);
     }
 }
 

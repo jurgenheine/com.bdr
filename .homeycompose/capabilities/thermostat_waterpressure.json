@@ -1,0 +1,42 @@
+{
+    "type": "number",
+    "title": {
+      "en": "Waterpressure",
+      "nl": "Waterdruk"
+    },
+    "units": {
+      "en": "bar"
+    },
+    "insights": true,
+    "desc": {
+      "en": "Waterpressure in bar (bar)",
+      "nl": "Waterdruk in bar (bar)"
+    },
+    "chartType": "spline",
+    "decimals": 1,
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "$flow": {
+      "triggers": [
+        {
+          "id": "thermostat_waterpressure_changed",
+          "title": {
+            "en": "The waterpressure changed",
+            "nl": "De waterdruk is veranderd"
+          },
+          "tokens": [
+            {
+              "name": "thermostat_waterpressure",
+              "title": {
+                "en": "Waterressure",
+                "nl": "Waterdruk"
+              },
+              "type": "number",
+              "example": 1.5
+            }
+          ]
+        }
+      ]
+    }
+  }

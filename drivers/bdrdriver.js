@@ -22,10 +22,10 @@ class BdrDriver extends Homey.Driver {
         };
     }
 
-    copyObject(value){
+    copyObject(value) {
         return JSON.parse(JSON.stringify(value));
     }
-    
+
     async login(username, password, brand) {
         var api_endpoint = `https://remoteapp.bdrthermea.com/user/${brand}/login`;
 
@@ -77,8 +77,8 @@ class BdrDriver extends Homey.Driver {
 
             if (response == null)
                 return null;
-            
-            if (response.status >= 200 && response.status < 300) {
+
+            if (response.status < 200 && response.status >= 300) {
                 this.homey.log(`ERROR with ${method} request to ${url}: ${response.statusText}`);
                 return null;
             }
@@ -96,14 +96,14 @@ class BdrDriver extends Homey.Driver {
     }
 
     async async_put_request(endpoint, token, payload) {
-        var headers = copyObject(this.base_header);
+        var headers = this.copyObject(this.base_header);
         headers["X-Bdr-Pairing-Token"] = token;
 
         return await this.sync_request("put", endpoint, headers, payload);
     }
 
     async async_get_request(endpoint, token) {
-        var headers = copyObject(this.base_header);
+        var headers = this.copyObject(this.base_header);
         headers["X-Bdr-Pairing-Token"] = token;
 
         return await this.sync_request("get", endpoint, headers);
@@ -122,18 +122,25 @@ class BdrDriver extends Homey.Driver {
         var api_endpoint = this.endpoints.capabilities;
 
         var capabilitiesToParse = await this.async_get_request(api_endpoint, token);
-
-        for (let capability of capabilitiesToParse) {
-            if (Array.isArray(capability.subsystem)) {
-                if (len(capability.subsystem) > 0) {
-                    capability.subsystem = capability.subsystem[0];
+        
+        for (var capability in capabilitiesToParse) {
+            capabilities[capability] = {};
+            if (Array.isArray(capabilitiesToParse[capability])) {
+                for (var functionname in capabilitiesToParse[capability][0]) {
+                    if (functionname.toLowerCase().indexOf('uri') !== -1) {
+                        capabilities[capability][functionname] = this.base_url + capabilitiesToParse[capability][0][functionname];
+                    } else {
+                        capabilities[capability][functionname] = capabilitiesToParse[capability][0][functionname];
+                    }
                 }
-                else
-                    continue;
-            }
-            capabilities[capability.subsystem_name] = {};
-            for (let subsystem of capability.subsystem) {
-                capabilities[capability.subsystem_name][subsystem.function] = this.base_url + subsystem.uri;
+            } else {
+                for (var functionname in capabilitiesToParse[capability]) {
+                    if (functionname.indexOf('Uri') !== -1) {
+                        capabilities[capability][functionname] = this.base_url + capabilitiesToParse[capability][functionname];
+                    } else {
+                        capabilities[capability][functionname] = capabilitiesToParse[capability][functionname];
+                    }
+                }
             }
         }
 

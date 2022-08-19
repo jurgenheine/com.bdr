@@ -32,15 +32,14 @@
   "drivers": [
     {
       "name": {
-        "en": "Remeha thermostat",
-        "nl": "Remeha thermostaat"
+        "en": "Remeha e-twist thermostat",
+        "nl": "Remeha e-twist thermostaat"
       },
       "class": "thermostat",
       "capabilities": [
         "target_temperature",
         "measure_temperature",
-        "measure_pressure",
-        "meter_power",
+        "thermostat_waterpressure",
         "thermostat_mode",
         "thermostat_program"
       ],
@@ -85,6 +84,18 @@
               "hint": {
                 "en": "The password of the user.",
                 "nl": "Het wachtwoord van de gebruiker."
+              }
+            },
+            {
+              "id": "pairingcode",
+              "type": "text",
+              "label": {
+                "en": "Pairingcode",
+                "nl": "Koppelcode"
+              },
+              "hint": {
+                "en": "The otp token of device.",
+                "nl": "Koppelcode van aparaat."
               }
             }
           ]
@@ -215,6 +226,26 @@
           }
         }
       ]
+    },
+    "thermostat_waterpressure": {
+      "type": "number",
+      "title": {
+        "en": "Waterpressure",
+        "nl": "Waterdruk"
+      },
+      "units": {
+        "en": "bar"
+      },
+      "insights": true,
+      "desc": {
+        "en": "Waterpressure in bar (bar)",
+        "nl": "Waterdruk in bar (bar)"
+      },
+      "chartType": "spline",
+      "decimals": 1,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
     }
   }
 }

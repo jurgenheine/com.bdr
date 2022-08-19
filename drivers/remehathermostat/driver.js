@@ -42,14 +42,14 @@ class RemahaDriver extends BdrDriver {
                 capabilities.push("meter_power");
             }
             if (bdr_capabilities?.system?.waterPressureUri != null) { //operating mode support
-                capabilities.push("measure_pressure");
+                capabilities.push("thermostat_waterpressure");
             }
             if (bdr_capabilities?.system?.flowTemperatureUri != null) { //operating mode support
                 capabilities.push("measure_temperature.flow");
                 capabilitiesOptions["measure_temperature.flow"] = { 'title': { 'en': "Water temperature", 'nl': "Water temperatuur" } };
             }
 
-            return { name: "Remeha_" + pairingcode, store: store, settings: settings, capabilities: capabilities, capabilitiesOptions: capabilitiesOptions, data: { id: token } };
+            return { name: "Remeha_" + data.pairingcode, store: store, settings: settings, capabilities: capabilities, capabilitiesOptions: capabilitiesOptions, data: { id: token } };
         });
         await session.showView("login");
     }

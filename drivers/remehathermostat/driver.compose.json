@@ -3,7 +3,7 @@
             "en": "Remeha e-twist thermostat" ,
             "nl": "Remeha e-twist thermostaat"},
     "class": "thermostat",
-    "capabilities": ["target_temperature","measure_temperature","measure_pressure","meter_power","thermostat_mode","thermostat_program"],
+    "capabilities": ["target_temperature","measure_temperature","thermostat_waterpressure","thermostat_mode","thermostat_program"],
     "images": {
       "small": "/drivers/remehathermostat/assets/images/small.png",
       "large": "/drivers/remehathermostat/assets/images/large.png",
