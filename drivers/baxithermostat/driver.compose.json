@@ -1,0 +1,17 @@
+{
+    "name": { 
+            "en": "Baxi Usense thermostat" ,
+            "nl": "Baxi Usense thermostaat"},
+    "class": "thermostat",
+    "capabilities": ["target_temperature","measure_temperature","thermostat_waterpressure","thermostat_mode","thermostat_program"],
+    "images": {
+      "small": "/drivers/remehathermostat/assets/images/small.png",
+      "large": "/drivers/remehathermostat/assets/images/large.png",
+      "xlarge": "/drivers/remehathermostat/assets/images/xlarge.png"
+    },
+    "pair": [
+      {
+        "id": "login"
+      }
+    ]
+  }

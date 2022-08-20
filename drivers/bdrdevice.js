@@ -209,6 +209,35 @@ class BdrDevice extends Homey.Device {
         }
     }
 
+    async async_update_all() {
+        await this.update_temperatures_loop();
+        await this.update_water_temperature_loop();
+        await this.update_water_pressure_loop();
+
+        //below for status
+        await this.get_consumptions();
+        await this.get_errors();
+        await this.get_device_information();
+    }
+
+    async update_temperatures_loop() {
+        await this.async_update_temperatures();
+        let interval_temperature = this.getSetting("interval_temperature");
+        this.homey.setTimeout(async () => await this.update_temperatures_loop(), interval_temperature * 60 * 1000);
+    }
+
+    async update_water_temperature_loop() {
+        await this.async_update_water_temperature();
+        let interval_flowtemp = this.getSetting("interval_flowtemp");
+        this.homey.setTimeout(async () => await this.update_water_temperature_loop(), interval_flowtemp * 60 * 1000);
+    }
+
+    async update_water_pressure_loop() {
+        await this.async_update_water_pressure();
+        let interval_pressure = this.getSetting("interval_pressure");
+        this.homey.setTimeout(async () => await this.update_water_pressure_loop(), interval_pressure * 60 * 60 * 1000);
+    }
+
     preset_mode_bdr_to_homey(bdr_mode, program = null) {
 
         if (bdr_mode !== "schedule")
