@@ -6,8 +6,8 @@
   },
   "brandColor": "#DAA520",
   "description": {
-    "en": "This app allows you to connect Homey to BDR Thermea( Remeha, Baxi, De Dietrich, Brötje Heizung)",
-    "nl": "Deze app laat je connectie maken met BDR Thermea ( Remeha, Baxi, De Dietrich, Brötje Heizung)"
+    "en": "This app allows you to connect Homey to BDR Thermea Thermostats( Remeha, Baxi, De Dietrich, Brötje Heizung)",
+    "nl": "Deze app laat je connectie maken met BDR Thermea Thermostaten( Remeha, Baxi, De Dietrich, Brötje Heizung)"
   },
   "category": "climate",
   "version": "0.0.1",
