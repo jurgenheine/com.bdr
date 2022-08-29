@@ -4,5 +4,8 @@
   },
   "0.0.2": {
     "en": "Implement remarks"
+  },
+  "0.0.3": {
+    "en": "Added De Dietrich thermostat"
   }
 }
