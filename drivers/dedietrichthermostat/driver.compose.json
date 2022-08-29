@@ -1,0 +1,17 @@
+{
+    "name": { 
+            "en": "De Dietrich Smart TC thermostat" ,
+            "nl": "De Dietrich Smart TC thermostaat"},
+    "class": "thermostat",
+    "capabilities": ["target_temperature","measure_temperature","thermostat_waterpressure","thermostat_mode","thermostat_program"],
+    "images": {
+      "small": "/drivers/dedietrichthermostat/assets/images/small.png",
+      "large": "/drivers/dedietrichthermostat/assets/images/large.png",
+      "xlarge": "/drivers/dedietrichthermostat/assets/images/xlarge.png"
+    },
+    "pair": [
+      {
+        "id": "login"
+      }
+    ]
+  }

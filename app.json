@@ -44,9 +44,9 @@
         "thermostat_program"
       ],
       "images": {
-        "small": "/drivers/remehathermostat/assets/images/small.png",
-        "large": "/drivers/remehathermostat/assets/images/large.png",
-        "xlarge": "/drivers/remehathermostat/assets/images/xlarge.png"
+        "small": "/drivers/baxithermostat/assets/images/small.png",
+        "large": "/drivers/baxithermostat/assets/images/large.png",
+        "xlarge": "/drivers/baxithermostat/assets/images/xlarge.png"
       },
       "pair": [
         {
@@ -54,6 +54,143 @@
         }
       ],
       "id": "baxithermostat",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Login details",
+            "nl": "Login gegevens"
+          },
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruiersnaam"
+              },
+              "hint": {
+                "en": "The name of the user.",
+                "nl": "De naam van de gebruiker."
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              },
+              "hint": {
+                "en": "The password of the user.",
+                "nl": "Het wachtwoord van de gebruiker."
+              }
+            },
+            {
+              "id": "pairingcode",
+              "type": "text",
+              "label": {
+                "en": "Pairingcode",
+                "nl": "Koppelcode"
+              },
+              "hint": {
+                "en": "The otp token of device.",
+                "nl": "Koppelcode van aparaat."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Intervals",
+            "nl": "Tijdsintervallen"
+          },
+          "children": [
+            {
+              "id": "interval_temperature",
+              "type": "number",
+              "label": {
+                "en": "Temperature",
+                "nl": "Temperatuur"
+              },
+              "value": 5,
+              "min": 1,
+              "units": {
+                "en": "minutes",
+                "nl": "minuten"
+              }
+            },
+            {
+              "id": "interval_pressure",
+              "type": "number",
+              "label": {
+                "en": "Waterpressure",
+                "nl": "Waterdruk"
+              },
+              "value": 24,
+              "min": 6,
+              "units": {
+                "en": "hours",
+                "nl": "uren"
+              }
+            },
+            {
+              "id": "interval_flowtemp",
+              "type": "number",
+              "label": {
+                "en": "Watertemperature",
+                "nl": "Watertemperatuur"
+              },
+              "value": 10,
+              "min": 2,
+              "units": {
+                "en": "minutes",
+                "nl": "minuten"
+              }
+            },
+            {
+              "id": "interval_power",
+              "type": "number",
+              "label": {
+                "en": "Powerconsumption",
+                "nl": "Verbruik"
+              },
+              "value": 5,
+              "min": 1,
+              "units": {
+                "en": "minutes",
+                "nl": "minuten"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "De Dietrich Smart TC thermostat",
+        "nl": "De Dietrich Smart TC thermostaat"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "target_temperature",
+        "measure_temperature",
+        "thermostat_waterpressure",
+        "thermostat_mode",
+        "thermostat_program"
+      ],
+      "images": {
+        "small": "/drivers/dedietrichthermostat/assets/images/small.png",
+        "large": "/drivers/dedietrichthermostat/assets/images/large.png",
+        "xlarge": "/drivers/dedietrichthermostat/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login"
+        }
+      ],
+      "id": "dedietrichthermostat",
       "settings": [
         {
           "type": "group",
