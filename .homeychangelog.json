@@ -10,5 +10,8 @@
   },
   "0.0.4": {
     "en": "New Icon for De Dietrich thermostat by Bas Van der Ploeg"
+  },
+  "0.0.5": {
+    "en": "Refactor pairing and update status info"
   }
 }
