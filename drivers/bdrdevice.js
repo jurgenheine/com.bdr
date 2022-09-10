@@ -30,6 +30,9 @@ class BdrDevice extends Homey.Device {
 
     async get_status() {
         var api_endpoint = this.capabilities.centralHeatingZones?.statusUri;
+        if(api_endpoint==null){
+            api_endpoint = this.capabilities.centralHeatingZones?.uri + "/status"
+        }  
         return await this.driver.async_get_request(api_endpoint, this.token);
     }
 
