@@ -11,6 +11,7 @@ You have to pair your devices first with the thermostat.
 ## Supported devices
 * Baxi Usense
 * Remeha Etwist
+* De Dietrich
 
 ### WIP
 * Brötje IDA
