@@ -10,7 +10,7 @@
     "nl": "BDR Thermea slimme klimaatoplossingen"
   },
   "category": "climate",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jurgen Heine",

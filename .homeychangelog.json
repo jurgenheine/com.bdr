@@ -13,5 +13,8 @@
   },
   "0.0.5": {
     "en": "Refactor pairing and update status info"
+  },
+  "0.0.6": {
+    "en": "Fix for not always updating and possible fix for error 480"
   }
 }
