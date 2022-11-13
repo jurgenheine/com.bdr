@@ -8,7 +8,7 @@ class BdrDriver extends Homey.Driver {
         this.base_header = {
             "Accept": "application/json, text/plain, */*",
             "Connection": "keep-alive",
-            "X-Requested-With": "com.bdrthermea.roomunitapplication."+brand,
+            "X-Requested-With": "com.bdrthermea.roomunitapplication."+brand.toLowerCase(),
             "Content-Type": "application/json;charset=UTF-8",
             "Sec-Fetch-Site": "cross-site",
             "Sec-Fetch-Mode": "cors",
