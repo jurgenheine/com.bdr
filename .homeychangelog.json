@@ -16,5 +16,8 @@
   },
   "0.0.6": {
     "en": "Fix for not always updating and possible fix for error 480"
+  },
+  "0.0.7": {
+    "en": "header error"
   }
 }
