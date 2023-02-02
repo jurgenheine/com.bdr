@@ -1,3 +1,6 @@
+# ${{\color{red}I\ am\ stopped\ with\ developping\ this\ app.\ I\ moved\ to\ Home\ Assistant.\}}$
+There is currently no new app developer yet. If somebody is making a PR, I will merge and publish it to the appstore.
+
 # BDR
 
 Homey App for thermostats from BDR Thermea group. BDR Thermea is owner of the brands Remeha, Baxi, De Dietrich, Chappee, Baymak and Brötje Heizung
